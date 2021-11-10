@@ -19,6 +19,14 @@ const Blog = ( {blog, setBlogs, blogs} ) => {
     setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
     console.log(updatedBlog)
   }
+
+  const handleRemove = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      await blogService.remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    }
+  }
   
   const blogRef = useRef()
 
@@ -30,6 +38,7 @@ const Blog = ( {blog, setBlogs, blogs} ) => {
           <button onClick={() => handleLike(blog.id)}>like</button>
           </div>
           <div>{blog.author}</div>
+          <button onClick={() => handleRemove(blog.id)}>remove</button>
         </div>
       </Togglable>
   )
