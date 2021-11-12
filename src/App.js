@@ -33,7 +33,7 @@ const App = () => {
       <form onSubmit={handleLogin}>
         <div>
           username
-            <input
+          <input
             type="text"
             value={username}
             name="Username"
@@ -42,7 +42,7 @@ const App = () => {
         </div>
         <div>
           password
-            <input
+          <input
             type="password"
             value={password}
             name="Password"
@@ -52,7 +52,7 @@ const App = () => {
         <button type="submit">login</button>
       </form>
     </div>
-          
+
   )
 
   const handleLogin = async (event) => {
@@ -88,7 +88,7 @@ const App = () => {
     setPassword('')
   }
 
-  
+
   const blogFormRef = useRef()
 
   const addBlog = async (blogObject) => {
@@ -109,10 +109,10 @@ const App = () => {
     </div>
   )
 
-  const sortedBlogs = [...blogs];
+  const sortedBlogs = [...blogs]
   sortedBlogs.sort((firstBlog, secondBlog) => firstBlog.likes - secondBlog.likes)
 
-  
+
 
   if (user === null) {
     return (
@@ -127,18 +127,18 @@ const App = () => {
         <h2>blogs</h2>
         <Notification message={message}/>
         <p>
-          {user.name} is logged in 
+          {user.name} is logged in
           <button onClick={handleLogout}>Logout</button>
         </p>
         {blogForm()}
-        
+
         {sortedBlogs.map(blog =>
           <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
         )}
       </div>
     )
   }
-  
+
 }
 
 export default App

@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import Togglable from './Togglable'
 import blogService from '../services/blogs'
 
-const Blog = ( {blog, setBlogs, blogs} ) => {
+const Blog = ( { blog, setBlogs, blogs } ) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -14,7 +14,7 @@ const Blog = ( {blog, setBlogs, blogs} ) => {
   const handleLike = async (id) => {
     const blog = blogs.find(b => b.id === id)
     const newLikes = blog.likes + 1
-    const newBlog = {...blog, likes: newLikes}
+    const newBlog = { ...blog, likes: newLikes }
     const updatedBlog = await blogService.update(id, newBlog)
     setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
     console.log(updatedBlog)
@@ -27,29 +27,29 @@ const Blog = ( {blog, setBlogs, blogs} ) => {
       setBlogs(blogs.filter(blog => blog.id !== id))
     }
   }
-  
+
   const blogRef = useRef()
 
   const blogDetail = () => (
-      <Togglable buttonLabel="view" hideButtonLabel="hide" ref={blogRef}>
-        <div>
-          <div>{blog.url}</div>
-          <div>likes {blog.likes}
+    <Togglable buttonLabel="view" hideButtonLabel="hide" ref={blogRef}>
+      <div>
+        <div>{blog.url}</div>
+        <div>likes {blog.likes}
           <button onClick={() => handleLike(blog.id)}>like</button>
-          </div>
-          <div>{blog.author}</div>
-          <button onClick={() => handleRemove(blog.id)}>remove</button>
         </div>
-      </Togglable>
+        <div>{blog.author}</div>
+        <button onClick={() => handleRemove(blog.id)}>remove</button>
+      </div>
+    </Togglable>
   )
-  
+
   return (
-  <div style={blogStyle}>
-    <div>
-    {blog.title} {blog.author}
+    <div style={blogStyle}>
+      <div>
+        {blog.title} {blog.author}
+      </div>
+      {blogDetail()}
     </div>
-    {blogDetail()}
-  </div>
   )}
 
 export default Blog
