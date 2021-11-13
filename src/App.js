@@ -81,6 +81,15 @@ const App = () => {
     console.log('logging in with', username, password)
   }
 
+  const handleLike = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const newLikes = blog.likes + 1
+    const newBlog = { ...blog, likes: newLikes }
+    const updatedBlog = await blogService.update(id, newBlog)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
+    console.log(updatedBlog)
+  }
+
   const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
@@ -133,7 +142,7 @@ const App = () => {
         {blogForm()}
 
         {sortedBlogs.map(blog =>
-          <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
+          <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} handleLike={handleLike}/>
         )}
       </div>
     )
